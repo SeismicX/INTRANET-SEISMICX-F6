@@ -1,0 +1,38 @@
+import tkinter as tk
+from tkinter import ttk
+
+def calcular_periodo_retorno():
+    try:
+        prob_excedencia = float(entry_prob_excedencia.get())  # Probabilidad de excedencia
+        t_exp = float(entry_t_exp.get())  # Tiempo de exposiciÃ³n
+        
+        # CÃ¡lculo del periodo de retorno
+        periodo_retorno = 1 / (1 - (1 - prob_excedencia / 100) ** (1 / t_exp))
+        label_resultado.config(text=f"Periodo de Retorno: {periodo_retorno:.2f} aÃ±os")
+    except ValueError:
+        label_resultado.config(text="Ingrese valores vÃ¡lidos.")
+
+# Crear ventana
+root = tk.Tk()
+root.title("Calculadora de Periodo de Retorno")
+root.geometry("400x250")
+
+# Etiquetas y entradas
+tk.Label(root, text="Probabilidad de Excedencia (%):").pack()
+entry_prob_excedencia = tk.Entry(root)
+entry_prob_excedencia.pack()
+
+tk.Label(root, text="Tiempo de ExposiciÃ³n (aÃ±os):").pack()
+entry_t_exp = tk.Entry(root)
+entry_t_exp.pack()
+
+# BotÃ³n Calcular
+boton_calcular = tk.Button(root, text="Calcular", command=calcular_periodo_retorno)
+boton_calcular.pack(pady=10)
+
+# Etiqueta de resultado
+label_resultado = tk.Label(root, text="Periodo de Retorno: -", font=("Arial", 12, "bold"), fg="blue")
+label_resultado.pack()
+
+# Iniciar la ventana
+root.mainloop()

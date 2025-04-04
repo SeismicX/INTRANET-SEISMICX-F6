@@ -1,0 +1,109 @@
+import numpy as np
+import pandas as pd
+import tkinter as tk
+from tkinter import messagebox, filedialog
+
+def calcular_longitud_ruptura(Mw):
+    """Calcula la longitud de la ruptura (L) en km a partir de la magnitud momento."""
+    a, b = -2.90, 0.63  # Coeficientes de regresión
+    return 10 ** (a + b * Mw)
+
+def calcular_ancho_ruptura(Mw):
+    """Calcula el ancho de la ruptura (W) en km, aplicando saturación para eventos grandes."""
+    a1, b1 = -1.91, 0.48  # Coeficientes para Mw <= 8.67
+    a2, W_sat = 2.29, 196  # Saturación para Mw > 8.67
+    
+    if Mw <= 8.67:
+        return 10 ** (a1 + b1 * Mw)
+    else:
+        return W_sat
+
+def calcular_ancho_ruptura_proyectado(W, buzamiento):
+    """Calcula el ancho de la ruptura proyectado (W_proy) en km."""
+    return W * np.cos(np.radians(buzamiento))
+
+def calcular_area_ruptura(Mw):
+    """Calcula el área de la ruptura (S) en km²."""
+    a1, b1 = -5.62, 1.22  # Coeficientes para Mw <= 8.63
+    a2, b2 = 2.23, 0.31  # Coeficientes para Mw > 8.63
+    
+    if Mw <= 8.63:
+        return 10 ** (a1 + b1 * Mw)
+    else:
+        return min(10 ** (a2 + b2 * Mw), 137_000)
+
+def calcular_deslizamiento_maximo(Mw):
+    """Calcula el deslizamiento máximo (Dmax) en metros."""
+    a, b = -4.94, 0.71
+    return 10 ** (a + b * Mw)
+
+def calcular_deslizamiento_promedio(Mw):
+    """Calcula el deslizamiento promedio (Dav) en metros."""
+    a, b = -5.05, 0.66
+    return 10 ** (a + b * Mw)
+
+def dimensionar_ruptura(Mw, buzamiento):
+    """Calcula todas las dimensiones del plano de ruptura a partir de Mw."""
+    L = calcular_longitud_ruptura(Mw)
+    W = calcular_ancho_ruptura(Mw)
+    W_proy = calcular_ancho_ruptura_proyectado(W, buzamiento)
+    S = calcular_area_ruptura(Mw)
+    Dmax = calcular_deslizamiento_maximo(Mw)
+    Dav = calcular_deslizamiento_promedio(Mw)
+    
+    return {
+        "Magnitud Momento (Mw)": round(Mw, 2),
+        "Longitud de Ruptura (km)": round(L, 2),
+        "Ancho de Ruptura (km)": round(W, 2),
+        "Ancho de Ruptura Proyectado (km)": round(W_proy, 2),
+        "Área de Ruptura (km²)": round(S, 2),
+        "Deslizamiento Máximo (m)": round(Dmax, 2),
+        "Deslizamiento Promedio (m)": round(Dav, 2)
+    }
+
+def calcular_y_mostrar():
+    try:
+        Mw = float(entry_Mw.get())
+        buzamiento = float(entry_buzamiento.get())
+        resultados = dimensionar_ruptura(Mw, buzamiento)
+        texto_resultados = "\n".join(f"{clave}: {valor}" for clave, valor in resultados.items())
+        resultado_texto.set(texto_resultados)
+    except ValueError:
+        messagebox.showerror("Error", "Ingrese valores numéricos válidos")
+
+def copiar_resultados():
+    root.clipboard_clear()
+    root.clipboard_append(resultado_texto.get())
+    root.update()
+    messagebox.showinfo("Copiado", "Resultados copiados al portapapeles")
+
+def guardar_csv():
+    filepath = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
+    if filepath:
+        try:
+            df = pd.DataFrame([dimensionar_ruptura(float(entry_Mw.get()), float(entry_buzamiento.get()))])
+            df.to_csv(filepath, index=False)
+            messagebox.showinfo("Guardado", "Resultados guardados en archivo CSV")
+        except Exception as e:
+            messagebox.showerror("Error", f"No se pudo guardar el archivo: {e}")
+
+# Interfaz gráfica con Tkinter
+root = tk.Tk()
+root.title("Cálculo de Ruptura Sísmica")
+
+tk.Label(root, text="Magnitud Momento (Mw):").grid(row=0, column=0)
+tk.Label(root, text="Ángulo de Buzamiento (°):").grid(row=1, column=0)
+
+entry_Mw = tk.Entry(root)
+entry_Mw.grid(row=0, column=1)
+entry_buzamiento = tk.Entry(root)
+entry_buzamiento.grid(row=1, column=1)
+
+tk.Button(root, text="Calcular", command=calcular_y_mostrar).grid(row=2, columnspan=2)
+tk.Button(root, text="Copiar Resultados", command=copiar_resultados).grid(row=3, column=0)
+tk.Button(root, text="Guardar CSV", command=guardar_csv).grid(row=3, column=1)
+
+resultado_texto = tk.StringVar()
+tk.Label(root, textvariable=resultado_texto, justify="left", font=("Courier", 10), anchor="w").grid(row=4, columnspan=2, sticky="w")
+
+root.mainloop()
