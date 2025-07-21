@@ -1,59 +1,203 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intranet - Curso DSHA</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intranet DSHA – Curso Especializado</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --color-azul: #003366;
+      --color-secundario: #0056b3;
+      --color-acento: #e0e0e0;
+      --color-claro: #ffffff;
+      --color-texto: #222;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--color-acento);
+      color: var(--color-texto);
+    }
+
+    /* Hero header */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+                  url('https://images.unsplash.com/photo-1581093588401-7b9e5efbab6d') center/cover;
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.8em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+    }
+
+    .navbar {
+      background-color: var(--color-azul);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar .brand {
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .navbar a.logout {
+      background-color: #cc0000;
+      color: white;
+      padding: 8px 14px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 500;
+    }
+
+    .navbar a.logout:hover {
+      background-color: #a00000;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    section {
+      background-color: var(--color-claro);
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    section h2 {
+      color: var(--color-azul);
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: var(--color-secundario);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .class-link {
+      display: inline-block;
+      background-color: var(--color-secundario);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .class-link:hover {
+      background-color: #003366;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.9em;
+      padding: 20px;
+      background-color: #f0f0f0;
+      color: #666;
+    }
+
+    i {
+      margin-right: 8px;
+      color: var(--color-secundario);
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2em;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar .logout {
+        margin-top: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <span class="navbar-brand">Curso DSHA</span>
-            <a href="index.html" class="logout-button">Cerrar Sesión</a>
-        </div>
-    </nav>
 
-    <!-- Contenido del dashboard -->
-    <div class="dashboard-container">
-        <h1>Curso Especializado en Peligrosidad Sísmica con Método Determinista (DSHA)</h1>
-        
-        <!-- Sección de Material de Clase -->
-        <section class="course-section">
-            <h2>Material de Clase</h2>
-            <ul>
-                <li><a href="Presentaciones/">Presentaciones</a></li>
-                <li><a href="Libros/">Libros</a></li>
-                <li><a href="Articulos/">Artículos</a></li>
-                <li><a href="Grabacion-Grupo-1/">Grabaciones Grupo 1</a></li>
-            </ul>
-        </section>
+  <nav class="navbar">
+    <div class="brand"><i class="fas fa-graduation-cap"></i> Curso DSHA</div>
+    <a href="index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+  </nav>
 
-        <!-- Sección de Enlace de Clase -->
-        <section class="course-section">
-            <h2>Enlace de Clase</h2>
-            <p>Únete a la clase virtual a través del siguiente enlace:</p>
-            <a href="https://meet.jit.si/CURSODEPELIGROSIDADSISMICADETERMINISTADSHA-F3" class="class-link">Unirse a la Clase</a>
-        </section>
+  <header class="hero">
+    <h1>Intranet del Curso DSHA</h1>
+    <p>Especialización en Peligrosidad Sísmica con el Método Determinista</p>
+  </header>
 
-        <!-- Sección de Horarios -->
-        <section class="course-section">
-            <h2>Horarios de Clase</h2>
-            <ul>
-                <li>Martes y Jueves: 8:00 PM - 10:00 PM (hora peruana)</li>
-            </ul>
-        </section>
+  <main class="container">
+    <section>
+      <h2><i class="fas fa-book"></i> Material de Clase</h2>
+      <ul>
+        <li><a href="Presentaciones/"><i class="fas fa-file-powerpoint"></i> Presentaciones</a></li>
+        <li><a href="Libros/"><i class="fas fa-book-open"></i> Libros</a></li>
+        <li><a href="Articulos/"><i class="fas fa-newspaper"></i> Artículos</a></li>
+        <li><a href="Grabacion-Grupo-1/"><i class="fas fa-video"></i> Grabaciones Grupo 1</a></li>
+      </ul>
+    </section>
 
-        <!-- Sección de Consultas al Docente -->
-        <section class="course-section">
-            <h2>Consultas al Docente</h2>
-            <p>Para consultas, puedes contactar al docente a través de:</p>
-            <ul>
-                <li><strong>Email:</strong> jltrujillo.earthquake@gmail.com</li>
-                <li><strong>WhatsApp:</strong> +51 927770169</li>
-            </ul>
-        </section>
-    </div>
+    <section>
+      <h2><i class="fas fa-door-open"></i> Enlace de Clase</h2>
+      <p>Únete a la clase virtual:</p>
+      <a href="https://meet.jit.si/CURSODEPELIGROSIDADSISMICADETERMINISTADSHA-F3" class="class-link">
+        <i class="fas fa-video"></i> Unirse a la Clase
+      </a>
+    </section>
+
+    <section>
+      <h2><i class="fas fa-clock"></i> Horarios de Clase</h2>
+      <ul>
+        <li><i class="fas fa-calendar-alt"></i> Martes y Jueves: 8:00 PM - 10:00 PM (hora peruana)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><i class="fas fa-envelope"></i> Consultas al Docente</h2>
+      <ul>
+        <li><strong>Email:</strong> jltrujillo.earthquake@gmail.com</li>
+        <li><strong>WhatsApp:</strong> +51 927770169</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    &copy; 2025 SeismicX | Curso DSHA | Desarrollado por Jorge Luis Trujillo Tafur
+  </footer>
+
 </body>
 </html>
